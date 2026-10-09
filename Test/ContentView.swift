@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  Test
-//
-//  Created by Louis Lesniak on 09/10/2026.
-//
-
 import SwiftUI
 import UserNotifications
 import CoreLocation
@@ -129,16 +122,108 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
 
 struct MainContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 24) {
+
+                    Image("ProfilePhoto")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 130, height: 130)
+                        .clipShape(Circle())
+                        .overlay {
+                            Circle()
+                                .stroke(
+                                    Color.accentColor.opacity(0.5),
+                                    lineWidth: 3
+                                )
+                        }
+                        .shadow(
+                            color: .black.opacity(0.15),
+                            radius: 12,
+                            y: 6
+                        )
+                        .padding(.top, 30)
+
+                    VStack(spacing: 8) {
+                        Text("Hi, I'm @wirneux 👋")
+                            .font(.largeTitle.bold())
+                            .multilineTextAlignment(.center)
+
+                        Text("Welcome to my first iOS App :D !")
+                            .font(.title3)
+                            .foregroundStyle(.secondary)
+                    }
+
+                    VStack(alignment: .leading, spacing: 12) {
+                        Label("About Me", systemImage: "person.text.rectangle")
+                            .font(.title2.bold())
+
+                        Text("""
+                        I'm @wirenux, and this is my first iOS app.
+
+                        I mostly do desktop app or CLI but why not test iOS app :D
+
+                        Thanks for reading :D !
+                        """)
+                        .font(.body)
+                        .foregroundStyle(.secondary)
+                        .lineSpacing(5)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(20)
+                    .background(
+                        Color(uiColor: .secondarySystemBackground)
+                    )
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+
+                    Link(
+                        destination: URL(
+                            string: "https://wirenux.com"
+                        )!
+                    ) {
+                        HStack(spacing: 10) {
+                            Image(systemName: "globe")
+                            Text("Discover My Portfolio")
+                            Spacer()
+                            Image(systemName: "arrow.up.right")
+                        }
+                        .font(.headline)
+                        .foregroundStyle(.white)
+                        .padding(18)
+                        .background(Color.accentColor)
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                    }
+
+                    VStack(spacing: 10) {
+                        Image(systemName: "iphone.gen3")
+                            .font(.system(size: 32))
+                            .foregroundStyle(.tint)
+
+                        Text("My First iOS App")
+                            .font(.headline)
+
+                        Text("Built with SwiftUI, curiosity, and a desire to learn.")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                            .multilineTextAlignment(.center)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 16)
+
+                    Text("Made by @wirenux")
+                        .font(.caption)
+                        .foregroundStyle(.tertiary)
+                        .padding(.bottom, 20)
+                }
+                .padding(.horizontal, 22)
+            }
+            .background(Color(uiColor: .systemBackground))
+            .navigationTitle("Home")
+            .navigationBarTitleDisplayMode(.inline)
         }
-        .padding()
     }
 }
-
 struct ContentView: View {
     var body: some View {
         TabView {
@@ -151,7 +236,6 @@ struct ContentView: View {
                     .navigationTitle("Settings")
                     .navigationBarTitleDisplayMode(.automatic)
             }
-            .badge("1")
         }
         .onAppear {
             _ = NotificationManager.shared
